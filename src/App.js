@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { fetchFolders, fetchNotesFromFolder } from "api/api";
+import { fetchFolders, fetchNotesFromFolder } from "api";
+import {Header, FoldersPanel, NoteEditor, NotesPanel} from "components";
 
 function App() {
   const [folders, setFolders] = useState([])
@@ -28,23 +29,11 @@ function App() {
 
   return (
     <>
-      <header>header stuff here</header>
+      <Header />
       <div className="container">
-        <div className="folders-container">
-          {currentFolder && (<p>current folder is {currentFolder.id}</p>)}
-          {folders.map(({id, name}) => (
-            <p key={id}>{id}: {name}</p>
-          ))}
-        </div>
-        <div className="notes-container">
-          {currentNote && (<p>current note is {currentNote.id}</p>)}
-          {notes.map(({id, content, timeCreated, timeModified, folderId}) => (
-              <p key={id}>{id}: {content} {timeCreated} {timeModified} {folderId}</p>
-          ))}
-        </div>
-        <div className="notes-editor">
-          {currentNote && (<p>current note content is {currentNote.content}</p>)}
-        </div>
+        <FoldersPanel folders={folders} currentFolder={currentFolder} />
+        <NotesPanel notes={notes} currentNote={currentNote} />
+        <NoteEditor currentNote={currentNote} />
       </div>
     </>
   );
