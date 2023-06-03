@@ -77,6 +77,21 @@ export const fetchNotesFromFolder = async (folderId) => {
 };
 
 /**
+ * Fetches notes.
+ *
+ * @returns {Promise<Array>} A Promise that resolves to an array of note objects.
+ */
+export const fetchNotes = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/notes`);
+    return await response.json();
+  } catch (error) {
+    console.error(`Error fetching notes:`, error);
+    throw error;
+  }
+};
+
+/**
  * Fetches a note by ID.
  *
  * @param {number} noteId - The ID of the note to fetch.

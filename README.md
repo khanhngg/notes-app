@@ -2,24 +2,24 @@
 
 ## Functionality
 1. Folder List
-- [ ] Shown in the left-most sidebar (see screenshot above)
+- [x] Shown in the left-most sidebar (see screenshot above)
 - [ ] Folders listed in alphabetical order
 - [ ] Ability to create new folders
 
 2. Notes List
-- [ ] Shown in the middle panel (see screenshot above)
-- [ ] Notes listed for the currently selected folder
+- [x] Shown in the middle panel (see screenshot above)
+- [x] Notes listed for the currently selected folder
 - [ ] Notes listed in order of most recently modified
 - [ ] Ability to create new notes in the selected folder
-- [ ] The first line of the note’s content is used as the title for the listing
-- [ ] Ability to select a note from the list and start editing it
+- [x] The first line of the note’s content is used as the title for the listing
+- [x] Ability to select a note from the list and start editing it
 - [ ] Ability to delete currently selected note
 
 3. Note Editor
-- [ ] Shown in the right-most panel (see screenshot above)
-- [ ] Ability to edit the note's content
-- [ ] Does NOT need to support WYSIWYG editing, simple text is sufficient
-- [ ] Should auto-save when the “Return/Enter” key is pressed on the keyboard
+- [x] Shown in the right-most panel (see screenshot above)
+- [x] Ability to edit the note's content
+- [x] Does NOT need to support WYSIWYG editing, simple text is sufficient
+- [x] Should auto-save when the “Return/Enter” key is pressed on the keyboard
 
 4. Extra Credit
 - [ ] Write unit tests. For the sake of time, you can just write a few tests to demonstrate this skill.

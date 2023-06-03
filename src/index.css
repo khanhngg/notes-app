@@ -1,3 +1,7 @@
+#root {
+  height: 100vh;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,7 +11,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   --color-light-white: #FCFCFC;
-  --color-white: #FBFBFB;
   --color-light-gray: #F7F7F7;
+  --color-light-gray-2: #EAEAEA;
+  --color-light-gray-3: #EBE9EB;
+  --color-medium-gray: #CFCDCF;
+  --color-medium-gray-2: #E5E5E3;
   --color-gray: #858585;
 }
