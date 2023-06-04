@@ -136,7 +136,7 @@ export const updateNote = async (noteId, noteData) => {
  * @param {number} noteId - The ID of the note to delete.
  * @returns {Promise<void>} A Promise that resolves when the note is successfully deleted.
  */
-export const deleteClassroom = async (noteId) => {
+export const deleteNote = async (noteId) => {
   try {
     const response = await fetch(`${API_BASE_URL}/notes/${noteId}`, {
       method: 'DELETE',

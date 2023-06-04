@@ -13,7 +13,7 @@
 - [ ] Ability to create new notes in the selected folder
 - [x] The first line of the note’s content is used as the title for the listing
 - [x] Ability to select a note from the list and start editing it
-- [ ] Ability to delete currently selected note
+- [x] Ability to delete currently selected note
 
 3. Note Editor
 - [x] Shown in the right-most panel (see screenshot above)

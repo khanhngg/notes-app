@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { fetchFolders, fetchNotesFromFolder, updateNote, fetchNotes } from "api";
+import { fetchFolders, fetchNotesFromFolder, updateNote, fetchNotes, deleteNote } from "api";
 import { Header, FoldersPanel, NoteEditor, NotesPanel } from "components";
 
 function App() {
@@ -57,6 +57,30 @@ function App() {
     });
   }
 
+  const handleToggleFolders = () => {
+
+  }
+
+  const handleCreateFolder = () => {
+  }
+
+  const handleCreateNote = () => {
+
+  }
+
+  const handleDeleteNote = async () => {
+    const deletedNote = await deleteNote(currentNote.id);
+    
+    // NOTE: Update fake local states
+    const newLocalNotes = localNotes.filter(note => note.id !== currentNote.id);
+    setLocalNotes(newLocalNotes);
+
+    const newNotes = notes.filter(note => note.id !== currentNote.id);
+    sortNotes(newNotes);
+    setNotes(newNotes);
+    setCurrentNote(newNotes[0]);
+  }
+
   const handleSelectFolder = async (folderId) => {
     const selectedFolder = folders.find(folder => folder.id === folderId);
 
@@ -95,11 +119,23 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header deleteNote={handleDeleteNote} />
       <div className="container">
-        <FoldersPanel folders={folders} currentFolder={currentFolder} selectFolder={handleSelectFolder} />
-        <NotesPanel notes={notes} currentNote={currentNote} selectNote={handleSelectNote} />
-        <NoteEditor currentNote={currentNote} updateNote={handleUpdateNote} />
+        <FoldersPanel
+          folders={folders}
+          currentFolder={currentFolder}
+          selectFolder={handleSelectFolder}
+          createFolder={handleCreateFolder}
+        />
+        <NotesPanel
+          notes={notes}
+          currentNote={currentNote}
+          selectNote={handleSelectNote}
+        />
+        <NoteEditor
+          currentNote={currentNote}
+          updateNote={handleUpdateNote}
+        />
       </div>
     </>
   );
