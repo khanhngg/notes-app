@@ -19,16 +19,18 @@ function App() {
 
   const fetchData = async () => {
     try {
-      
       const foldersData = await fetchFolders();
+      sortFolders(foldersData);
+
       const notesData = await fetchNotesFromFolder(foldersData[0].id);
+      sortNotes(notesData);
 
       setFolders(foldersData);
       setCurrentFolder(foldersData[0]);
       setNotes(notesData);
       setCurrentNote(notesData[0]);
 
-      // Set local states for fake data persistence
+      // NOTE: Set local states for fake data persistence
       const localNotesData = await fetchNotes();
       setLocalNotes(localNotesData);
       setLocalFolders(foldersData);
@@ -36,6 +38,24 @@ function App() {
       // TODO: Handle error
     }
   };
+
+  const sortFolders = (folders) => {
+    folders.sort((folderA, folderB) => {
+      if (folderA.name < folderB.name) {
+        return -1;
+      }
+      if (folderA.name > folderB.name) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  const sortNotes = (notes) => {
+    notes.sort((noteA, noteB) => {
+      return noteB.timeModified - noteA.timeModified;
+    });
+  }
 
   const handleSelectFolder = async (folderId) => {
     const selectedFolder = folders.find(folder => folder.id === folderId);
@@ -62,10 +82,11 @@ function App() {
     const newNotes = [...notes];
     newNotes[updatedNoteIndex] = updatedNote;
 
+    sortNotes(newNotes);
     setNotes(newNotes);
     setCurrentNote(updatedNote);
 
-    // Update fake local states
+    // NOTE: Update fake local states
     const updatedLocalNoteIndex = localNotes.findIndex((note) => note.id === updatedNote.id);
     const newLocalNotes = [...localNotes];
     newLocalNotes[updatedLocalNoteIndex] = updatedNote;

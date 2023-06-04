@@ -11,7 +11,7 @@ const NoteEditor = ({ currentNote, updateNote }) => {
   const handleOnEnter = (event) => {
     if (event.key === 'Enter') {
       const value = event.target.value + "\n";
-      return updateNote({...currentNote, content: value})
+      return updateNote({...currentNote, content: value, timeModified: Math.round(Date.now() / 1000)})
     }
   }
   

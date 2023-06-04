@@ -3,13 +3,13 @@
 ## Functionality
 1. Folder List
 - [x] Shown in the left-most sidebar (see screenshot above)
-- [ ] Folders listed in alphabetical order
+- [x] Folders listed in alphabetical order
 - [ ] Ability to create new folders
 
 2. Notes List
 - [x] Shown in the middle panel (see screenshot above)
 - [x] Notes listed for the currently selected folder
-- [ ] Notes listed in order of most recently modified
+- [x] Notes listed in order of most recently modified
 - [ ] Ability to create new notes in the selected folder
 - [x] The first line of the note’s content is used as the title for the listing
 - [x] Ability to select a note from the list and start editing it
