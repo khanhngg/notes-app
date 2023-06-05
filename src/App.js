@@ -68,7 +68,7 @@ function App() {
   const handleCreatingNote = () => {
     setIsCreatingNote(true);
     const newNote = {
-      "id": localNotes.length + 1,
+      "id": localNotes.length + 1, // NOTE: ideally this should be set using UUID generator
       "content": "",
       "timeCreated" : Math.round(Date.now() / 1000),
       "timeModified" : Math.round(Date.now() / 1000),
@@ -79,12 +79,10 @@ function App() {
     sortNotes(newNotes);
     setNotes(newNotes);
     setCurrentNote(newNote);
-    console.log(newNotes);
-    
+
     // NOTE: Update fake local states
     const newLocalNotes = [...localNotes, newNote];
     setLocalNotes(newLocalNotes);
-    console.log(newLocalNotes);
   }
 
   const handleCreateNote = async (note) => {
@@ -93,14 +91,18 @@ function App() {
     updateNoteStates(createdNote);
   }
 
-  const handleDeleteNote = async () => {
-    setIsCreatingNote(false);
-
+  const handleDeleteNote = async (isFromNotesPanel) => {
     await deleteNote(currentNote.id);
 
     // NOTE: Update fake local states
     const newLocalNotes = localNotes.filter(note => note.id !== currentNote.id);
     setLocalNotes(newLocalNotes);
+
+    if (isCreatingNote && !isFromNotesPanel) {
+      setIsCreatingNote(false);
+      return;
+    }
+    setIsCreatingNote(false);
 
     const newNotes = notes.filter(note => note.id !== currentNote.id);
     sortNotes(newNotes);
@@ -109,7 +111,11 @@ function App() {
   }
 
   const handleSelectFolder = async (folderId) => {
-    // TODO - check if iscreating note, then delete that one
+    // Check if is in the middle of creating note, delete that unsaved one
+    if (isCreatingNote) {
+      handleDeleteNote();
+    }
+
     const selectedFolder = folders.find(folder => folder.id === folderId);
 
     // NOTE: Ideally, we should call API to get the correct data like below:
@@ -124,7 +130,11 @@ function App() {
   }
 
   const handleSelectNote = async (noteId) => {
-    // TODO - check if iscreating note, then delete that one
+    // Check if is in the middle of creating note, delete that unsaved one
+    if (isCreatingNote) {
+      handleDeleteNote(true);
+    }
+
     const selectedNote = notes.find(note => note.id === noteId);
     setCurrentNote(selectedNote);
   }
@@ -141,8 +151,6 @@ function App() {
     const newNotes = [...notes];
     newNotes[updatedNoteIndex] = note;
 
-    console.log(updatedNoteIndex);
-    console.log(newNotes);
     sortNotes(newNotes);
     setNotes(newNotes);
     setCurrentNote(note);
@@ -152,8 +160,6 @@ function App() {
     const newLocalNotes = [...localNotes];
     newLocalNotes[updatedLocalNoteIndex] = note;
     setLocalNotes(newLocalNotes);
-    console.log(updatedLocalNoteIndex);
-    console.log(newLocalNotes);
   }
 
   return (
