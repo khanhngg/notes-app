@@ -72,6 +72,7 @@ header .search-bar-container {
 
 .folders-container .button {
   display: flex;
+  margin-top: 10px;
   margin-bottom: 20px;
   cursor: default;
 }
@@ -79,6 +80,10 @@ header .search-bar-container {
 .folders-container .button span {
   align-self: center;
   margin-left: 7px;
+}
+
+.folders-list {
+  overflow: scroll;
 }
 
 .folder-item {
@@ -103,6 +108,7 @@ header .search-bar-container {
   background-color: var(--color-light-white);
   padding: 0 1em;
   min-width: 0;
+  overflow: scroll;
 }
 
 .notes-container div {

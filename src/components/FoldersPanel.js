@@ -1,7 +1,7 @@
 const FoldersPanel = ({ isShow, folders, currentFolder, selectFolder, createFolder }) => {
   return (
     <div className={`folders-container ${!isShow ? "hide" : ""}`}>
-      <div>
+      <div className="folders-list">
         {folders.map(({ id, name }) => {
           return currentFolder.id === id
           ?
