@@ -1,5 +1,6 @@
 const NotesPanel = ({ notes, currentNote, selectNote }) => {
   const getNoteTitle = (content) => {
+    if (!content) return "New Note";
     return content.split('\n')[0];
   }
 
@@ -9,7 +10,7 @@ const NotesPanel = ({ notes, currentNote, selectNote }) => {
         return currentNote.id === id
         ?
           <div className="note-item selected-item" key={id}>
-            <span><strong>{getNoteTitle(currentNote.content)}</strong></span>
+            <span><strong>{getNoteTitle(content)}</strong></span>
           </div>
         :
           <div className="note-item" key={id} onClick={() => selectNote(id)}>

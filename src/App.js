@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { fetchFolders, fetchNotesFromFolder, updateNote, fetchNotes, deleteNote } from "api";
+import { fetchFolders, fetchNotesFromFolder, createNote, updateNote, fetchNotes, deleteNote } from "api";
 import { Header, FoldersPanel, NoteEditor, NotesPanel } from "components";
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [currentFolder, setCurrentFolder] = useState();
   const [currentNote, setCurrentNote] = useState();
+  const [isCreatingNote, setIsCreatingNote] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -64,13 +65,39 @@ function App() {
   const handleCreateFolder = () => {
   }
 
-  const handleCreateNote = () => {
+  const handleCreatingNote = () => {
+    setIsCreatingNote(true);
+    const newNote = {
+      "id": localNotes.length + 1,
+      "content": "",
+      "timeCreated" : Math.round(Date.now() / 1000),
+      "timeModified" : Math.round(Date.now() / 1000),
+      "folderId": currentFolder.id
+    }
 
+    const newNotes = [...notes, newNote];
+    sortNotes(newNotes);
+    setNotes(newNotes);
+    setCurrentNote(newNote);
+    console.log(newNotes);
+    
+    // NOTE: Update fake local states
+    const newLocalNotes = [...localNotes, newNote];
+    setLocalNotes(newLocalNotes);
+    console.log(newLocalNotes);
+  }
+
+  const handleCreateNote = async (note) => {
+    setIsCreatingNote(false);
+    const createdNote = await createNote(note);
+    updateNoteStates(createdNote);
   }
 
   const handleDeleteNote = async () => {
-    const deletedNote = await deleteNote(currentNote.id);
-    
+    setIsCreatingNote(false);
+
+    await deleteNote(currentNote.id);
+
     // NOTE: Update fake local states
     const newLocalNotes = localNotes.filter(note => note.id !== currentNote.id);
     setLocalNotes(newLocalNotes);
@@ -82,6 +109,7 @@ function App() {
   }
 
   const handleSelectFolder = async (folderId) => {
+    // TODO - check if iscreating note, then delete that one
     const selectedFolder = folders.find(folder => folder.id === folderId);
 
     // NOTE: Ideally, we should call API to get the correct data like below:
@@ -90,11 +118,13 @@ function App() {
     const notesData = localNotes.filter(note => note.folderId === folderId);
 
     setCurrentFolder(selectedFolder);
+    sortNotes(notesData);
     setNotes(notesData);
     setCurrentNote(notesData[0]);
   }
 
   const handleSelectNote = async (noteId) => {
+    // TODO - check if iscreating note, then delete that one
     const selectedNote = notes.find(note => note.id === noteId);
     setCurrentNote(selectedNote);
   }
@@ -102,24 +132,37 @@ function App() {
   const handleUpdateNote = async (note) => {
     const updatedNote = await updateNote(note.id, note);
 
-    const updatedNoteIndex = notes.findIndex((note) => note.id === updatedNote.id);
-    const newNotes = [...notes];
-    newNotes[updatedNoteIndex] = updatedNote;
+    // NOTE: Pass `note` instead of `updatedNote` to accomodate the 404 response from fake REST API
+    updateNoteStates(note);
+  }
 
+  const updateNoteStates = (note) => {
+    const updatedNoteIndex = notes.findIndex((otherNote) => otherNote.id === note.id);
+    const newNotes = [...notes];
+    newNotes[updatedNoteIndex] = note;
+
+    console.log(updatedNoteIndex);
+    console.log(newNotes);
     sortNotes(newNotes);
     setNotes(newNotes);
-    setCurrentNote(updatedNote);
-
+    setCurrentNote(note);
+    
     // NOTE: Update fake local states
-    const updatedLocalNoteIndex = localNotes.findIndex((note) => note.id === updatedNote.id);
+    const updatedLocalNoteIndex = localNotes.findIndex((otherNote) => otherNote.id === note.id);
     const newLocalNotes = [...localNotes];
-    newLocalNotes[updatedLocalNoteIndex] = updatedNote;
+    newLocalNotes[updatedLocalNoteIndex] = note;
     setLocalNotes(newLocalNotes);
+    console.log(updatedLocalNoteIndex);
+    console.log(newLocalNotes);
   }
 
   return (
     <>
-      <Header deleteNote={handleDeleteNote} />
+      <Header
+        toggleFolders={handleToggleFolders}
+        deleteNote={handleDeleteNote}
+        createNote={handleCreatingNote}
+      />
       <div className="container">
         <FoldersPanel
           folders={folders}
@@ -135,6 +178,8 @@ function App() {
         <NoteEditor
           currentNote={currentNote}
           updateNote={handleUpdateNote}
+          isCreatingNote={isCreatingNote}
+          createNote={handleCreateNote}
         />
       </div>
     </>

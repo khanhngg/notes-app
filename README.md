@@ -10,7 +10,7 @@
 - [x] Shown in the middle panel (see screenshot above)
 - [x] Notes listed for the currently selected folder
 - [x] Notes listed in order of most recently modified
-- [ ] Ability to create new notes in the selected folder
+- [x] Ability to create new notes in the selected folder
 - [x] The first line of the note’s content is used as the title for the listing
 - [x] Ability to select a note from the list and start editing it
 - [x] Ability to delete currently selected note

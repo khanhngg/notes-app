@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { parseTime } from "utils/timeParser";
 
-const NoteEditor = ({ currentNote, updateNote }) => {
+const NoteEditor = ({ currentNote, updateNote, isCreatingNote, createNote }) => {
   const [noteContent, setNoteContent] = useState('');
 
   useEffect(() => {
@@ -11,14 +11,22 @@ const NoteEditor = ({ currentNote, updateNote }) => {
   const handleOnEnter = (event) => {
     if (event.key === 'Enter') {
       const value = event.target.value + "\n";
-      return updateNote({
-          ...currentNote,
-          content: value,
-          timeModified: Math.round(Date.now() / 1000)
-        })
+      if (isCreatingNote) {
+        return createNote({
+            ...currentNote,
+            content: value,
+            timeModified: Math.round(Date.now() / 1000)
+          });
+      } else {
+        return updateNote({
+            ...currentNote,
+            content: value,
+            timeModified: Math.round(Date.now() / 1000)
+          });
+      }
     }
   }
-  
+
   const handleChange = (event) => {
     const value = event.target.value;
     setNoteContent(value);
