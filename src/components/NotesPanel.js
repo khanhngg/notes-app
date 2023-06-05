@@ -16,6 +16,9 @@ const NotesPanel = ({ notes, currentNote, selectNote }) => {
             <span>{getNoteTitle(content)}</span>
           </div>
       })}
+      {notes.length === 0 && (
+        <p className="note-item empty-notes">No Notes</p>
+      )}
     </div>
   );
 };

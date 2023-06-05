@@ -28,12 +28,14 @@ const NoteEditor = ({ currentNote, updateNote }) => {
     <div className="note-editor-container">
       <p className="note-time-modified">{currentNote && parseTime(currentNote.timeModified)}</p>
       <div className="note-editor">
-        <textarea
-          value={noteContent}
-          onKeyDown={(event) => handleOnEnter(event)}
-          onChange={(event) => handleChange(event)}
-        >
-        </textarea>
+        {currentNote && (
+          <textarea
+            value={noteContent}
+            onKeyDown={(event) => handleOnEnter(event)}
+            onChange={(event) => handleChange(event)}
+          >
+          </textarea>
+        )}
       </div>
     </div>  );
 };
