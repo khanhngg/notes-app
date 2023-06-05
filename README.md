@@ -22,15 +22,19 @@
 - [x] Should auto-save when the “Return/Enter” key is pressed on the keyboard
 
 4. Extra Credit
-- [ ] Write unit tests. For the sake of time, you can just write a few tests to demonstrate this skill.
+- [x] Write unit tests. For the sake of time, you can just write a few tests to demonstrate this skill.
 - [x] Ability to toggle (open/close) the Folder List sidebar
 - [x] The second line of the note's content is used as a short text preview in the Notes List
 - [ ] Display an alert or confirmation when your note has unsaved changes when you switch to a different note or folder
 - [ ] Ability to search through all notes (by content) and display matching notes in the middle panel (Notes List). Clearing the search term would show all notes.
 
 ## Demo
+[Loom Screen Recording](https://www.loom.com/share/69420a52cb984e8cab86b570397e3e4b)
+
+![](./screen.gif)
 
 ## Test
+[Link to tests](./src/App.test.js)
 
 # Getting Started with Create React App
 
