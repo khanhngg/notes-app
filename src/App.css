@@ -145,3 +145,75 @@ header .search-bar {
 .hide {
   display: none;
 }
+
+.modal-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  width: 400px;
+  background-color: var(--color-light-gray);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.modal-header {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.modal-header {
+  font-weight: 700;
+}
+
+.modal-body {
+  padding-bottom: 1em;
+  border-bottom: 0.5px solid var(--color-medium-gray);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body label {
+  font-size: 14px;
+}
+.modal-body input {
+  margin-top: 10px;
+  border: 0.5px solid var(--color-medium-gray);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.modal-footer {
+  padding-top: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.modal-footer button {
+  margin-left: 10px;
+  width: 70px;
+  padding: 0.5em;
+  border: 0.5px solid var(--color-medium-gray);
+  border-radius: 5px;
+  background-color: var(--color-light-white);
+}
+
+.modal-footer button.submit-button {
+  background-color: var(--color-blue);
+  color: var(--color-light-white);
+}
+
+.modal-footer button.submit-button:disabled {
+  background-color: var(--color-light-gray-2);
+  color: var(--color-gray);
+}

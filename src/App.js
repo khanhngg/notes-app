@@ -1,19 +1,27 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { fetchFolders, fetchNotesFromFolder, createNote, updateNote, fetchNotes, deleteNote } from "api";
-import { Header, FoldersPanel, NoteEditor, NotesPanel } from "components";
+import {
+  createFolder,
+  fetchFolders,
+  fetchNotesFromFolder,
+  createNote,
+  updateNote,
+  fetchNotes,
+  deleteNote
+} from "api";
+import { Header, FoldersPanel, NoteEditor, NotesPanel, Modal } from "components";
 
 function App() {
   // NOTE: Using local states since Typicode My JSON Server does not persist data
-  const [localFolders, setLocalFolders] = useState([]);
   const [localNotes, setLocalNotes] = useState([]);
 
   const [folders, setFolders] = useState([]);
   const [notes, setNotes] = useState([]);
   const [currentFolder, setCurrentFolder] = useState();
   const [currentNote, setCurrentNote] = useState();
-  const [isCreatingNote, setIsCreatingNote] = useState(false);
 
+  const [isCreatingNote, setIsCreatingNote] = useState(false);
+  const [isCreatingFolder, setIsCreatingFolder] = useState(false);  
   const [isShowFoldersPanel, setIsShowFoldersPanel] = useState(true);
 
   useEffect(() => {
@@ -36,7 +44,6 @@ function App() {
       // NOTE: Set local states for fake data persistence
       const localNotesData = await fetchNotes();
       setLocalNotes(localNotesData);
-      setLocalFolders(foldersData);
     } catch (error) {
       // TODO: Handle error
     }
@@ -44,10 +51,10 @@ function App() {
 
   const sortFolders = (folders) => {
     folders.sort((folderA, folderB) => {
-      if (folderA.name < folderB.name) {
+      if (folderA.name.toLowerCase() < folderB.name.toLowerCase()) {
         return -1;
       }
-      if (folderA.name > folderB.name) {
+      if (folderA.name.toLowerCase() > folderB.name.toLowerCase()) {
         return 1;
       }
       return 0;
@@ -65,7 +72,25 @@ function App() {
     setIsShowFoldersPanel(toggle);
   }
 
-  const handleCreateFolder = () => {
+  const handleCreatingFolder = () => {
+    setIsCreatingFolder(true);
+  }
+
+  const handleCancelCreateFolder = () => {
+    setIsCreatingFolder(false);
+  }
+  
+  const handleCreateFolder = async (folderName) => {
+    setIsCreatingFolder(false);
+    const newFolder = {
+      "id": folders.length + 1,
+      "name": folderName
+    }
+
+    const createdFolder = await createFolder(newFolder);
+    const newFolders = [...folders, createdFolder];
+    sortFolders(newFolders);
+    setFolders(newFolders);
   }
 
   const handleCreatingNote = () => {
@@ -178,7 +203,7 @@ function App() {
           folders={folders}
           currentFolder={currentFolder}
           selectFolder={handleSelectFolder}
-          createFolder={handleCreateFolder}
+          createFolder={handleCreatingFolder}
         />
         <NotesPanel
           notes={notes}
@@ -192,6 +217,14 @@ function App() {
           createNote={handleCreateNote}
         />
       </div>
+      { isCreatingFolder && (
+        <Modal
+          header="Create New Folder"
+          body="Folder Name"
+          cancel={handleCancelCreateFolder}
+          submit={handleCreateFolder}
+        />
+      )}
     </>
   );
 }

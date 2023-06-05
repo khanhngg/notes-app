@@ -4,7 +4,7 @@
 1. Folder List
 - [x] Shown in the left-most sidebar (see screenshot above)
 - [x] Folders listed in alphabetical order
-- [ ] Ability to create new folders
+- [x] Ability to create new folders
 
 2. Notes List
 - [x] Shown in the middle panel (see screenshot above)
