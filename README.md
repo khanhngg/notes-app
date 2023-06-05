@@ -23,8 +23,8 @@
 
 4. Extra Credit
 - [ ] Write unit tests. For the sake of time, you can just write a few tests to demonstrate this skill.
-- [ ] Ability to toggle (open/close) the Folder List sidebar
-- [ ] The second line of the note's content is used as a short text preview in the Notes List
+- [x] Ability to toggle (open/close) the Folder List sidebar
+- [x] The second line of the note's content is used as a short text preview in the Notes List
 - [ ] Display an alert or confirmation when your note has unsaved changes when you switch to a different note or folder
 - [ ] Ability to search through all notes (by content) and display matching notes in the middle panel (Notes List). Clearing the search term would show all notes.
 

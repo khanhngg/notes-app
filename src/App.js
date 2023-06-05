@@ -14,6 +14,8 @@ function App() {
   const [currentNote, setCurrentNote] = useState();
   const [isCreatingNote, setIsCreatingNote] = useState(false);
 
+  const [isShowFoldersPanel, setIsShowFoldersPanel] = useState(true);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -59,7 +61,8 @@ function App() {
   }
 
   const handleToggleFolders = () => {
-
+    const toggle = !isShowFoldersPanel;
+    setIsShowFoldersPanel(toggle);
   }
 
   const handleCreateFolder = () => {
@@ -171,6 +174,7 @@ function App() {
       />
       <div className="container">
         <FoldersPanel
+          isShow={isShowFoldersPanel}
           folders={folders}
           currentFolder={currentFolder}
           selectFolder={handleSelectFolder}
