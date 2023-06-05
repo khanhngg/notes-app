@@ -13,6 +13,7 @@ const Modal = ({ header, body, cancel, submit }) => {
             name="input"
             value={input}
             placeholder="Please enter folder name..."
+            autoFocus={true}
             onChange={event => setInput(event.target.value)}
             />
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { parseTime } from "utils/timeParser";
+import { parseDateTime } from "utils/timeParser";
 
 const NoteEditor = ({ currentNote, updateNote, isCreatingNote, createNote }) => {
   const [noteContent, setNoteContent] = useState('');
@@ -34,7 +34,7 @@ const NoteEditor = ({ currentNote, updateNote, isCreatingNote, createNote }) => 
 
   return (
     <div className="note-editor-container">
-      <p className="note-time-modified">{currentNote && parseTime(currentNote.timeModified)}</p>
+      <p className="note-time-modified">{currentNote && parseDateTime(currentNote.timeModified)}</p>
       <div className="note-editor">
         {currentNote && (
           <textarea

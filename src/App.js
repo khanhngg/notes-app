@@ -25,29 +25,27 @@ function App() {
   const [isShowFoldersPanel, setIsShowFoldersPanel] = useState(true);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const foldersData = await fetchFolders();
+        sortFolders(foldersData);
+  
+        const notesData = await fetchNotesFromFolder(foldersData[0].id);
+        sortNotes(notesData);
+  
+        setFolders(foldersData);
+        setCurrentFolder(foldersData[0]);
+        setNotes(notesData);
+        setCurrentNote(notesData[0]);
+  
+        // NOTE: Set local states for fake data persistence
+        const localNotesData = await fetchNotes();
+        setLocalNotes(localNotesData);
+      } catch (error) {
+      }
+    };
     fetchData();
   }, []);
-
-  const fetchData = async () => {
-    try {
-      const foldersData = await fetchFolders();
-      sortFolders(foldersData);
-
-      const notesData = await fetchNotesFromFolder(foldersData[0].id);
-      sortNotes(notesData);
-
-      setFolders(foldersData);
-      setCurrentFolder(foldersData[0]);
-      setNotes(notesData);
-      setCurrentNote(notesData[0]);
-
-      // NOTE: Set local states for fake data persistence
-      const localNotesData = await fetchNotes();
-      setLocalNotes(localNotesData);
-    } catch (error) {
-      // TODO: Handle error
-    }
-  };
 
   const sortFolders = (folders) => {
     folders.sort((folderA, folderB) => {
@@ -79,7 +77,7 @@ function App() {
   const handleCancelCreateFolder = () => {
     setIsCreatingFolder(false);
   }
-  
+
   const handleCreateFolder = async (folderName) => {
     setIsCreatingFolder(false);
     const newFolder = {
@@ -168,6 +166,7 @@ function App() {
   }
 
   const handleUpdateNote = async (note) => {
+    // eslint-disable-next-line
     const updatedNote = await updateNote(note.id, note);
 
     // NOTE: Pass `note` instead of `updatedNote` to accomodate the 404 response from fake REST API

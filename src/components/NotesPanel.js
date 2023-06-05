@@ -1,3 +1,5 @@
+import { parseTime } from "utils/timeParser";
+
 const NotesPanel = ({ notes, currentNote, selectNote }) => {
   const getNoteTitle = (content) => {
     if (!content) return "New Note";
@@ -23,17 +25,21 @@ const NotesPanel = ({ notes, currentNote, selectNote }) => {
 
   return (
     <div className="notes-container">
-      {notes.map(({ id, content, timeCreated, timeModified, folderId }) => {
+      {notes.map(({ id, content, timeModified }) => {
         return currentNote.id === id
         ?
           <div className="note-item selected-item" key={id}>
             <p className="note-title"><strong>{getNoteTitle(content)}</strong></p>
-            <p className="note-preview">{getNotePreview(content)}</p>
+            <p className="note-preview">
+              <span>{parseTime(timeModified)}</span> {getNotePreview(content)}
+            </p>
           </div>
         :
         <div className="note-item" key={id} onClick={() => selectNote(id)}>
             <p className="note-title"><strong>{getNoteTitle(content)}</strong></p>
-            <p className="note-preview">{getNotePreview(content)}</p>
+            <p className="note-preview">
+              <span>{parseTime(timeModified)}</span> {getNotePreview(content)}
+            </p>
           </div>
       })}
       {notes.length === 0 && (
