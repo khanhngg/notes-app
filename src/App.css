@@ -66,12 +66,13 @@ header .search-bar-container {
   justify-content: space-between;
   flex: 1 1 0;
   background-color: var(--color-light-gray);
-  padding: 0 1em;
+  /* padding: 0 1em; */
   min-width: 0;
 }
 
 .folders-container .button {
   display: flex;
+  margin-left: 10px;
   margin-top: 10px;
   margin-bottom: 20px;
   cursor: default;
@@ -87,10 +88,10 @@ header .search-bar-container {
 }
 
 .folder-item {
-  margin-top: 0.5em;
-  padding: 0.5em;
+  /* margin-top: 0.5em; */
+  padding: 1em;
   cursor: default;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -100,22 +101,26 @@ header .search-bar-container {
   background-color: var(--color-medium-gray-2);
 }
 
+.folder-item.selected-item {
+  background-color: var(--color-light-gray-4);
+}
+
 .notes-container {
   display: flex;
   flex-direction: column;
   flex: 2 2 0;
   border-left: 1px solid var(--color-light-gray-2);
   background-color: var(--color-light-white);
-  padding: 0 1em;
+  /* padding: 0 1em; */
   min-width: 0;
   overflow: scroll;
 }
 
 .notes-container div {
-  margin-top: 0.5em;
+  /* margin-top: 0.5em; */
   padding: 0.5em;
   cursor: default;
-  border-radius: 5px;
+  /* border-radius: 5px; */
 }
 
 .note-title, .note-preview {
@@ -144,7 +149,8 @@ header .search-bar-container {
 }
 
 .note-editor-container {
-  flex: 3 3 max-content;
+  flex: 3 3 0;
+  min-width: 0;
   border-left: 1px solid var(--color-light-gray-2);
   background-color: var(--color-light-white);
   padding: 0 2rem;
