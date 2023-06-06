@@ -3,6 +3,7 @@ import { parseDateTime } from "utils/timeParser";
 
 const NoteEditor = ({ currentNote, updateNote, isCreatingNote, createNote }) => {
   const [noteContent, setNoteContent] = useState('');
+  const [isEnterPressed, setIsEnterPressed] = useState(false);
 
   useEffect(() => {
     setNoteContent(currentNote?.content);
@@ -10,7 +11,17 @@ const NoteEditor = ({ currentNote, updateNote, isCreatingNote, createNote }) => 
 
   const handleOnEnter = (event) => {
     if (event.key === 'Enter') {
-      const value = event.target.value + "\n";
+      setIsEnterPressed(true);
+    }
+  }
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setNoteContent(value);
+
+    if (isEnterPressed) {
+      setIsEnterPressed(false);
+
       if (isCreatingNote) {
         return createNote({
             ...currentNote,
@@ -25,11 +36,6 @@ const NoteEditor = ({ currentNote, updateNote, isCreatingNote, createNote }) => 
           });
       }
     }
-  }
-
-  const handleChange = (event) => {
-    const value = event.target.value;
-    setNoteContent(value);
   }
 
   return (
