@@ -2,17 +2,19 @@ const FoldersPanel = ({ isShow, folders, currentFolder, selectFolder, createFold
   return (
     <div data-testid="folders-container" className={`folders-container ${!isShow ? "hide" : ""}`}>
       <div className="folders-list">
-        {folders.map(({ id, name }) => {
-          return currentFolder.id === id
-          ?
-            <div className="folder-item selected-item" key={id}>
-              <span><strong>{name}</strong></span>
-            </div>
-          :
-            <div className="folder-item" key={id} onClick={() => selectFolder(id)}>
-              <span>{name}</span>
-            </div>
-        })}
+        {folders.map(({ id, name }) => (
+          <div
+            key={id}
+            className={`folder-item ${currentFolder.id === id ? 'selected-item' : '' }`}
+            onClick={() => {
+              if (currentFolder.id !== id) {
+                selectFolder(id)
+              }
+            }}
+          >
+            <span>{name}</span>
+          </div>
+        ))}
       </div>
       <div className="button" role="button" onClick={() => createFolder()}>
         {/* New Folder Icon */}

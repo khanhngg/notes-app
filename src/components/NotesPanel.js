@@ -25,23 +25,22 @@ const NotesPanel = ({ notes, currentNote, selectNote }) => {
 
   return (
     <div className="notes-container">
-      {notes.map(({ id, content, timeModified }) => {
-        return currentNote.id === id
-        ?
-          <div className="note-item selected-item" key={id}>
-            <p className="note-title"><strong>{getNoteTitle(content)}</strong></p>
-            <p className="note-preview">
-              <span>{parseTime(timeModified)}</span> {getNotePreview(content)}
-            </p>
-          </div>
-        :
-        <div className="note-item" key={id} onClick={() => selectNote(id)}>
-            <p className="note-title"><strong>{getNoteTitle(content)}</strong></p>
-            <p className="note-preview">
-              <span>{parseTime(timeModified)}</span> {getNotePreview(content)}
-            </p>
-          </div>
-      })}
+      {notes.map(({ id, content, timeModified }) => (
+        <div
+          key={id}
+          className={`note-item ${currentNote.id === id ? 'selected-item' : ''}`}
+          onClick={() => {
+            if (currentNote.id !== id) {
+              selectNote(id)
+            }
+          }}
+        >
+          <p className="note-title"><strong>{getNoteTitle(content)}</strong></p>
+          <p className="note-preview">
+            <span>{parseTime(timeModified)}</span> {getNotePreview(content)}
+          </p>
+        </div>
+      ))}
       {notes.length === 0 && (
         <p className="note-item empty-notes">No Notes</p>
       )}
